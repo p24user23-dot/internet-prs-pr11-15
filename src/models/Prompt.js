@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Task = sequelize.define('Task', {
+const Prompt = sequelize.define('Prompt', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -15,11 +15,11 @@ const Task = sequelize.define('Task', {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  status: {
-    type: DataTypes.ENUM('open', 'done'),
-    defaultValue: 'open'
+  aiModel: {
+    type: DataTypes.ENUM('gpt', 'midjourney', 'claude'),
+    defaultValue: 'gpt'
   },
-  priority: {
+  priceCategory: {
     type: DataTypes.INTEGER,
     defaultValue: 1,
     validate: {
@@ -32,10 +32,9 @@ const Task = sequelize.define('Task', {
     allowNull: false
   }
 }, {
-  tableName: 'tasks',
+  tableName: 'prompts',
   timestamps: true,
-  updatedAt: false
+  updatedAt: false // Only createdAt is required
 });
 
-module.exports = Task;
-
+module.exports = Prompt;

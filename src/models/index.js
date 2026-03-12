@@ -1,19 +1,19 @@
 const sequelize = require('../config/database');
 const User = require('./User');
-const Task = require('./Task');
-const Attachment = require('./Attachment');
+const Prompt = require('./Prompt');
+const Generation = require('./Generation');
 
-// user 1-N tasks
-User.hasMany(Task, { foreignKey: 'userId', as: 'tasks', onDelete: 'CASCADE' });
-Task.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+// user 1-N prompts
+User.hasMany(Prompt, { foreignKey: 'userId', as: 'prompts', onDelete: 'CASCADE' });
+Prompt.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
-// task 1-N attachments
-Task.hasMany(Attachment, { foreignKey: 'taskId', as: 'attachments', onDelete: 'CASCADE' });
-Attachment.belongsTo(Task, { foreignKey: 'taskId', as: 'task' });
+// prompt 1-N generations
+Prompt.hasMany(Generation, { foreignKey: 'promptId', as: 'generations', onDelete: 'CASCADE' });
+Generation.belongsTo(Prompt, { foreignKey: 'promptId', as: 'prompt' });
 
 module.exports = {
   sequelize,
   User,
-  Task,
-  Attachment
+  Prompt,
+  Generation
 };
