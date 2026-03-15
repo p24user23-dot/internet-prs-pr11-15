@@ -8,39 +8,22 @@ class PromptService {
 
   async getPrompts(query) {
     const { aiModel, priceCategory, search, sort = 'createdAt', order = 'desc', page = 1, limit = 10 } = query;
-
     const whereClause = {};
-
-    if (aiModel) {
-      whereClause.aiModel = aiModel;
-    }
-
-    if (priceCategory) {
-      whereClause.priceCategory = priceCategory;
-    }
-
+    if (aiModel) whereClause.aiModel = aiModel;
+    if (priceCategory) whereClause.priceCategory = priceCategory;
     if (search) {
       whereClause[Op.or] = [
         { title: { [Op.like]: `%${search}%` } },
         { description: { [Op.like]: `%${search}%` } }
       ];
     }
-
     const offset = (Number(page) - 1) * Number(limit);
-
     const { count, rows } = await Prompt.findAndCountAll({
-      where: whereClause,
-      order: [[sort, order.toUpperCase()]],
-      limit: Number(limit),
-      offset: offset
+      where: whereClause, order: [[sort, order.toUpperCase()]], limit: Number(limit), offset
     });
-
     return {
-      total: count,
-      page: Number(page),
-      limit: Number(limit),
-      totalPages: Math.ceil(count / Number(limit)),
-      data: rows
+      total: count, page: Number(page), limit: Number(limit),
+      totalPages: Math.ceil(count / Number(limit)), data: rows
     };
   }
 
