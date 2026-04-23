@@ -14,8 +14,8 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Root route (Health check / Welcome API)
 app.get('/', (req, res) => {
-  res.status(200).json({ 
-    message: 'Welcome to AI Prompt Marketplace API! 🚀',
+  res.status(200).json({
+    message: 'Welcome to AI Prompt Marketplace API! 🤘',
     status: 'Running'
   });
 });
